@@ -3,6 +3,16 @@ export type Point = {
 	y: number;
 };
 
+export type Dimension = {
+	height: number;
+	width: number;
+};
+
 export type Tile<T> = {
 	floor: T;
+};
+
+export type TileInfo = Dimension & {
+	half: Dimension;
+	base: Point;
 };

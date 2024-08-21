@@ -1,7 +1,9 @@
+import type { Dimension } from "../lib/CommonTypes";
 import { Helper } from "../lib/helper";
 import { Constants } from "./contants";
 import { GroundTile, type MapTile } from "./MapTile";
-const ROWS = 10;
+
+const ROWS = 40;
 const COLS = 10;
 
 const data = Helper.mountBaseData<MapTile>(
@@ -12,15 +14,9 @@ const data = Helper.mountBaseData<MapTile>(
 	COLS,
 );
 
-export const CANVAS_WIDTH =
-	COLS * Constants.TILE_WIDTH - Constants.HALF_TILE_WIDTH;
-export const CANVAS_HEIGHT =
-	(ROWS / 2) * Constants.TILE_HEIGHT - Constants.HALF_TILE_HEIGHT;
+export const CANVAS_DIMENSION: Dimension = {
+	width: COLS * Constants.Tile.width - Constants.Tile.half.width,
+	height: (ROWS / 2) * Constants.Tile.height - Constants.Tile.half.height,
+};
 
-export const creatorData = Helper.mountCreatorData(
-	data,
-	Constants.TILE_WIDTH,
-	Constants.HALF_TILE_WIDTH,
-	Constants.HALF_TILE_HEIGHT,
-	Constants.BASE,
-);
+export const creatorData = Helper.mountCreatorData(data, Constants.Tile);

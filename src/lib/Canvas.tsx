@@ -1,11 +1,20 @@
 import { useEffect, useRef } from "react";
-type Props = {
+import type { Tile, TileInfo } from "./CommonTypes";
+import { Helper } from "./helper";
+
+type Props<T> = {
 	width: number;
 	height: number;
-	draw: (context2d: CanvasRenderingContext2D) => void;
+	data: Tile<T>[][];
+	draw: (
+		context2d: CanvasRenderingContext2D,
+		line: number,
+		column: number,
+		tile: Tile<T>,
+	) => void;
 };
 
-function Canvas({ width, height, draw }: Props) {
+function CanvasMapMaker<T>({ width, height, draw, data }: Props<T>) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {
@@ -15,11 +24,17 @@ function Canvas({ width, height, draw }: Props) {
 			canvas.height = height;
 			const context = canvas.getContext("2d");
 			if (context) {
-				draw(context);
+				const rows = data.length;
+				const cols = data[0].length;
+				for (let line = 0; line < rows; line++) {
+					for (let column = 0; column < cols; column++) {
+						draw(context, line, column, data[line][column]);
+					}
+				}
 			}
 		}
-	}, [width, height, draw]);
+	}, [width, height, draw, data]);
 	return <canvas ref={canvasRef} />;
 }
 
-export default Canvas;
+export default CanvasMapMaker;
