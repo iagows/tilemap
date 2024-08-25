@@ -1,9 +1,11 @@
+import type { Matrix } from "../util/types";
+
 export type Tile<T> = T & {
-	ground: string;
+	color: string;
 };
 
 export type MapInfo<T> = {
 	name: string;
 	background: string;
-	ground: Tile<T>[][];
+	ground: Matrix<Tile<T>>;
 };

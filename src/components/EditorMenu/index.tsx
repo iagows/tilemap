@@ -1,32 +1,49 @@
 import { InputColor, InputNumber, InputString } from "./helper/Input";
 import useMapInfo from "../../stores/slices/mapInfo/useMapInfo";
+import transformMatrix from "../../util/matrix";
 
 function EditorMenu() {
 	const {
-		currentMap: { name, background, ground },
 		setName,
+		setGround,
 		setBackground,
+		currentMap: { name, background, ground },
 	} = useMapInfo();
-	const rows = ground.length;
-	const cols = rows < 1 ? 0 : ground[0].length;
-
 	function setRows(val: number) {
-		if (val !== rows) {
-			console.log("mudou", val);
+		if (val > 0) {
+			const nextMatrix = transformMatrix({
+				reference: ground,
+				targetColumnCount: ground[0].length,
+				targetRowCount: val,
+			});
+			setGround(nextMatrix);
 		}
 	}
 
 	function setColumns(val: number) {
-		if (val !== cols) {
-			console.log("mudou", val);
+		if (val > 0) {
+			const nextMatrix = transformMatrix({
+				reference: ground,
+				targetColumnCount: val,
+				targetRowCount: ground.length,
+			});
+			setGround(nextMatrix);
 		}
 	}
 
 	return (
 		<>
 			<InputString value={name} onChange={setName} placeholder="Nome" />
-			<InputNumber value={rows} onChange={setRows} placeholder="Linhas" />
-			<InputNumber value={cols} onChange={setColumns} placeholder="Colunas" />
+			<InputNumber
+				value={ground.length}
+				onChange={setRows}
+				placeholder="Linhas"
+			/>
+			<InputNumber
+				value={ground[0].length}
+				onChange={setColumns}
+				placeholder="Colunas"
+			/>
 			<InputColor
 				value={background}
 				onChange={setBackground}
