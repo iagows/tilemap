@@ -8,6 +8,8 @@ A library for creating tile maps and to show them.
 
 I wanted to make a SVG map, but it was to heavy. So I decided to program it.
 
+Do not expect beautiful code. I just want to make it work.
+
 ## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

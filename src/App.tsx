@@ -1,5 +1,5 @@
-import EditorMenu from "./EditorMenu";
-import Preview from "./Preview";
+import EditorMenu from "./components/EditorMenu";
+import Preview from "./components/Preview";
 import useMapInfo from "./stores/slices/mapInfo/useMapInfo";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
 			<Preview
 				mapInfo={currentMap}
 				drawTile={(tile) => console.log({ tile })}
+				onClick={(x, y) => console.log(x, y)}
 			/>
 		</>
 	);

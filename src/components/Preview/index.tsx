@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
-import type { MapInfo, Tile } from "../types/MapInfo";
+import type { MapInfo, Tile } from "../../types/MapInfo";
 
 type Props<T> = {
 	mapInfo: MapInfo<T>;
 	drawTile: (tile: Tile<T>) => void;
+	onClick?: (x: number, y: number) => void;
 };
-function Preview<T>({ mapInfo, drawTile }: Props<T>) {
+function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 	const { ground, name, background } = mapInfo;
 	const ref = useRef<HTMLCanvasElement>(null);
 
@@ -14,10 +15,10 @@ function Preview<T>({ mapInfo, drawTile }: Props<T>) {
 			const canvas = ref.current;
 			const context = canvas.getContext("2d");
 			if (context) {
-				console.log("preview - contexto ok", ground);
+				console.log("context is ok");
 			}
 		}
-	}, [ground]);
+	}, []);
 
 	return (
 		<>
