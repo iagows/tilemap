@@ -1,6 +1,7 @@
 import { InputColor, InputNumber, InputString } from "./helper/Input";
 import useMapInfo from "../../stores/slices/mapInfo/useMapInfo";
 import transformMatrix from "../../util/matrix";
+import useTileConfig from "../../stores/slices/tileConfig/useTileConfig";
 
 function EditorMenu() {
 	const {
@@ -9,6 +10,8 @@ function EditorMenu() {
 		setBackground,
 		currentMap: { name, background, ground },
 	} = useMapInfo();
+	const { changeHeight, height } = useTileConfig();
+
 	function setRows(val: number) {
 		if (val > 0) {
 			const nextMatrix = transformMatrix({
@@ -43,6 +46,11 @@ function EditorMenu() {
 				value={ground[0].length}
 				onChange={setColumns}
 				placeholder="Colunas"
+			/>
+			<InputNumber
+				value={height}
+				onChange={changeHeight}
+				placeholder="Altura do losango"
 			/>
 			<InputColor
 				value={background}
