@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { MapInfo, Tile } from "../types/MapInfo";
 
 type Props<T> = {
@@ -5,10 +6,20 @@ type Props<T> = {
 	drawTile: (tile: Tile<T>) => void;
 };
 function Preview<T>({ mapInfo, drawTile }: Props<T>) {
-	const { ground, name } = mapInfo;
+	const { ground, name, background } = mapInfo;
+	const ref = useRef<HTMLCanvasElement>(null);
+
+	useEffect(() => {
+		if (ref.current) {
+			const canvas = ref.current;
+			console.log({ canvas }, { ground });
+		}
+	}, [ground]);
+
 	return (
 		<>
 			<div>{name}</div>
+			<canvas ref={ref} style={{ background }} />
 		</>
 	);
 }

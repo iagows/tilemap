@@ -1,7 +1,7 @@
 import type { MapInfo } from "../types/MapInfo";
 
-type Info = {
+export type TagmarTileInfo = {
 	effect: string;
 };
 
-export type TagmarMap = MapInfo<Info>;
+export type TagmarMap = MapInfo<TagmarTileInfo>;

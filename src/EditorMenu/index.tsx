@@ -1,12 +1,17 @@
 import { useState } from "react";
 import Editor from "../TileMap/Editor";
 import { InputHelp } from "./helper/Input";
+import useMapInfo from "../stores/slices/mapInfo/useMapInfo";
 
 function EditorMenu() {
-	const [name, setName] = useState<string>("");
+	const {
+		currentMap: { name, background },
+		setName,
+		setBackground,
+	} = useMapInfo();
 	const [columns, setColumns] = useState<number>(1);
 	const [rows, setRows] = useState<number>(1);
-	const [bg, setBg] = useState<string>("#abcabc");
+
 	return (
 		<>
 			<div>
@@ -25,9 +30,13 @@ function EditorMenu() {
 					onChange={setRows}
 					placeholder="Linhas"
 				/>
-				<InputHelp.InputColor value={bg} onChange={setBg} placeholder="Fundo" />
+				<InputHelp.InputColor
+					value={background}
+					onChange={setBackground}
+					placeholder="Fundo"
+				/>
 			</div>
-			<Editor background={bg} columns={columns} rows={rows} />
+			<Editor background={background} columns={columns} rows={rows} />
 		</>
 	);
 }

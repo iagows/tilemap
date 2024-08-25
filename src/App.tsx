@@ -1,15 +1,16 @@
-import { useState } from "react";
 import EditorMenu from "./EditorMenu";
 import Preview from "./Preview";
-import type { TagmarMap } from "./tagmar/TagmarTile";
-import { Tagmar } from "./constants";
+import useMapInfo from "./stores/slices/mapInfo/useMapInfo";
 
 function App() {
-	const [mapa, setMapa] = useState<TagmarMap>(Tagmar.startingMap);
+	const { currentMap } = useMapInfo();
 	return (
 		<>
 			<EditorMenu />
-			<Preview mapInfo={mapa} drawTile={(tile) => console.log({ tile })} />
+			<Preview
+				mapInfo={currentMap}
+				drawTile={(tile) => console.log({ tile })}
+			/>
 		</>
 	);
 }

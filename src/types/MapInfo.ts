@@ -4,5 +4,6 @@ export type Tile<T> = T & {
 
 export type MapInfo<T> = {
 	name: string;
+	background: string;
 	ground: Tile<T>[];
 };
