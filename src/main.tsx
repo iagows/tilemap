@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import EditorMenu from "./EditorMenu";
+import App from "./App";
 
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<EditorMenu />
+		<App />
 	</StrictMode>,
 );
