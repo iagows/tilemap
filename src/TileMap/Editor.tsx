@@ -1,14 +1,11 @@
 import { useEffect, useRef } from "react";
-type Tile<T> = {
-	floor: string;
-};
 
 type Props = {
 	background: string;
 	columns: number;
 	rows: number;
 };
-function Preview({ background, columns, rows }: Props) {
+function Editor({ background, columns, rows }: Props) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	useEffect(() => {
 		if (canvasRef.current) {
@@ -22,4 +19,4 @@ function Preview({ background, columns, rows }: Props) {
 	return <canvas ref={canvasRef} style={{ background }} />;
 }
 
-export default Preview;
+export default Editor;

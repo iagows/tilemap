@@ -12,7 +12,10 @@ function Preview<T>({ mapInfo, drawTile }: Props<T>) {
 	useEffect(() => {
 		if (ref.current) {
 			const canvas = ref.current;
-			console.log({ canvas }, { ground });
+			const context = canvas.getContext("2d");
+			if (context) {
+				console.log("preview - contexto ok", ground);
+			}
 		}
 	}, [ground]);
 
