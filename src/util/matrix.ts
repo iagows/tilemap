@@ -81,7 +81,14 @@ const transformMatrix = <T>({
 		),
 	);
 
-	return transformedMatrix.map((row) => row.slice(0, targetColumnCount));
+	return transformedMatrix.map((row) =>
+		row.length > targetColumnCount
+			? row.slice(0, targetColumnCount)
+			: [
+					...row,
+					...Array(targetColumnCount - row.length).fill(row[row.length - 1]),
+				],
+	);
 };
 
 export default transformMatrix;
