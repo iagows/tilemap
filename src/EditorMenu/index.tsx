@@ -1,84 +1,6 @@
 import { useState } from "react";
 import Editor from "../TileMap/Editor";
-
-function stringer(setter: (val: string) => void) {
-	return (e: React.ChangeEvent<HTMLInputElement>) => {
-		const val = e.target.value;
-		setter(val);
-	};
-}
-
-function numberer(setter: (val: number) => void) {
-	return (e: React.ChangeEvent<HTMLInputElement>) => {
-		const val = e.target.value;
-		setter(Number.parseFloat(val));
-	};
-}
-
-type LabelProps = {
-	htmlFor: string;
-};
-
-const Label = ({ htmlFor }: LabelProps) => {
-	return <label htmlFor={htmlFor}>{htmlFor}: </label>;
-};
-
-type StringProps = {
-	value: string;
-	placeholder: string;
-	onChange: (str: string) => void;
-};
-const InputString = ({ value, onChange, placeholder }: StringProps) => {
-	return (
-		<>
-			<Label htmlFor={placeholder} />
-			<input
-				id={placeholder}
-				type="text"
-				value={value}
-				onChange={stringer(onChange)}
-				placeholder={placeholder}
-			/>
-		</>
-	);
-};
-
-const InputColor = ({ value, onChange, placeholder }: StringProps) => {
-	return (
-		<>
-			<Label htmlFor={placeholder} />
-			<input
-				id={placeholder}
-				type="color"
-				value={value}
-				onChange={stringer(onChange)}
-				placeholder={placeholder}
-			/>
-		</>
-	);
-};
-
-type NumberProps = {
-	value: number;
-	placeholder: string;
-	onChange: (value: number) => void;
-};
-const InputNumber = ({ value, onChange, placeholder }: NumberProps) => {
-	return (
-		<>
-			<Label htmlFor={placeholder} />
-			<input
-				id={placeholder}
-				type="number"
-				min={1}
-				step={1}
-				value={value}
-				placeholder={placeholder}
-				onChange={numberer(onChange)}
-			/>
-		</>
-	);
-};
+import { InputHelp } from "./helper/Input";
 
 function EditorMenu() {
 	const [name, setName] = useState<string>("");
@@ -88,14 +10,22 @@ function EditorMenu() {
 	return (
 		<>
 			<div>
-				<InputString value={name} onChange={setName} placeholder="Nome" />
-				<InputNumber
+				<InputHelp.InputString
+					value={name}
+					onChange={setName}
+					placeholder="Nome"
+				/>
+				<InputHelp.InputNumber
 					value={columns}
 					onChange={setColumns}
 					placeholder="Colunas"
 				/>
-				<InputNumber value={rows} onChange={setRows} placeholder="Linhas" />
-				<InputColor value={bg} onChange={setBg} placeholder="Fundo" />
+				<InputHelp.InputNumber
+					value={rows}
+					onChange={setRows}
+					placeholder="Linhas"
+				/>
+				<InputHelp.InputColor value={bg} onChange={setBg} placeholder="Fundo" />
 			</div>
 			<Editor background={bg} columns={columns} rows={rows} />
 		</>
