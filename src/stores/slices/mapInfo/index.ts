@@ -2,6 +2,7 @@ import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { TagmarMap, TagmarTileInfo } from "../../../tagmar/TagmarTile";
 import type { Tile } from "../../../types/MapInfo";
 import type { Matrix } from "../../../util/types";
+import { Colors } from "../../../util/colors";
 
 const INITIAL_CONFIG: TagmarMap = {
 	name: "Mapa",
@@ -9,11 +10,11 @@ const INITIAL_CONFIG: TagmarMap = {
 		[
 			{
 				effect: "",
-				color: "#abcabc",
+				color: Colors.LAND_GREEN,
 			},
 		],
 	],
-	background: "#abcabc",
+	background: Colors.WATER,
 };
 
 const mapSlice = createSlice({
