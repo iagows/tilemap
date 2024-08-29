@@ -21,3 +21,17 @@ export const isPointInDiamond = (p: Point, diamond: Diamond): boolean => {
 		return isPointLeftOfLine(p, v, next);
 	});
 };
+
+export function getEnumKeyByEnumValue<
+	TEnumKey extends string,
+	TEnumVal extends string | number,
+>(
+	myEnum: { [key in TEnumKey]: TEnumVal },
+	enumValue: TEnumVal,
+): TEnumKey | undefined {
+	const keys = (Object.keys(myEnum) as TEnumKey[]).filter(
+		(key) => myEnum[key] === enumValue,
+	);
+
+	return keys.length > 0 ? keys[0] : undefined;
+}

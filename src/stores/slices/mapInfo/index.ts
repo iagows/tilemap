@@ -10,11 +10,17 @@ const INITIAL_CONFIG: TagmarMap = {
 		[
 			{
 				effect: "",
-				color: Colors.LAND_GREEN,
+				color: Colors.Verde,
 			},
 		],
 	],
-	background: Colors.WATER,
+	background: Colors.Agua,
+};
+
+type TilePosAndData = {
+	row: number;
+	column: number;
+	tile: Tile<TagmarTileInfo>;
 };
 
 const mapSlice = createSlice({
@@ -34,8 +40,15 @@ const mapSlice = createSlice({
 		setBackground: (state, action: PayloadAction<string>) => {
 			state.background = action.payload;
 		},
+		setTile: (state, action: PayloadAction<TilePosAndData>) => {
+			const {
+				payload: { column, row, tile },
+			} = action;
+			state.ground[row][column] = tile;
+		},
 	},
 });
 
 export default mapSlice.reducer;
-export const { setName, setAllGround, setBackground } = mapSlice.actions;
+export const { setName, setAllGround, setBackground, setTile } =
+	mapSlice.actions;

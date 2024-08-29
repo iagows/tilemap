@@ -24,21 +24,12 @@ const draw = (
 };
 
 function App() {
-	const { currentMap, setGround } = useMapInfo();
+	const { currentMap, setTile } = useMapInfo();
 
-	const onClick = (tile: Tile<TagmarTileInfo>, row: number, column: number) => {
-		// const nextTile: typeof tile = {
-		// 	...tile,
-		// 	color: "#0fd",
-		// };
-		// const g = [...currentMap.ground];
-		// g[row][column] = nextTile;
-		// setGround(g);
-	};
 	return (
 		<>
 			<EditorMenu />
-			<Preview mapInfo={currentMap} drawTile={draw} onClick={onClick} />
+			<Preview mapInfo={currentMap} drawTile={draw} onClick={setTile} />
 		</>
 	);
 }

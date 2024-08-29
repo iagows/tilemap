@@ -1,7 +1,13 @@
-import { InputColor, InputNumber, InputString } from "./helper/Input";
+import {
+	InputColor,
+	InputNumber,
+	InputRadio,
+	InputString,
+} from "./helper/Input";
 import useMapInfo from "../../stores/slices/mapInfo/useMapInfo";
 import transformMatrix from "../../util/matrix";
 import useTileConfig from "../../stores/slices/tileConfig/useTileConfig";
+import { Colors } from "../../util/colors";
 
 function EditorMenu() {
 	const {
@@ -56,6 +62,16 @@ function EditorMenu() {
 				value={background}
 				onChange={setBackground}
 				placeholder="Fundo"
+			/>
+			<InputRadio
+				groupId="Cores"
+				currentValue={Colors.Agua}
+				label="Cores"
+				onChange={(e) => console.log(e)}
+				list={Object.entries(Colors).map((e) => ({
+					label: e[0],
+					value: e[1],
+				}))}
 			/>
 		</>
 	);

@@ -4,6 +4,7 @@ import {
 	setAllGround as setMapGround,
 	setName as setMapName,
 	setBackground as setMapBackground,
+	setTile as setSingleMapTile,
 } from ".";
 import type { Tile } from "../../../types/MapInfo";
 import type { Matrix } from "../../../util/types";
@@ -13,6 +14,7 @@ type Out = {
 	setGround: (newMap: Matrix<Tile<TagmarTileInfo>>) => void;
 	setName: (name: string) => void;
 	setBackground: (bg: string) => void;
+	setTile: (row: number, column: number, tile: Tile<TagmarTileInfo>) => void;
 };
 function useMapInfo(): Out {
 	const dispatch = useAppDispatch();
@@ -30,11 +32,21 @@ function useMapInfo(): Out {
 		dispatch(setMapBackground(bg));
 	}
 
+	function setTile(
+		row: number,
+		column: number,
+		tile: Tile<TagmarTileInfo>,
+	): void {
+		console.log({ tile });
+		dispatch(setSingleMapTile({ row, column, tile }));
+	}
+
 	return {
 		currentMap,
 		setGround,
 		setName,
 		setBackground,
+		setTile,
 	};
 }
 

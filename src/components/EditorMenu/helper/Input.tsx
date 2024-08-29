@@ -1,4 +1,8 @@
+import type React from "react";
+import { Colors } from "../../../util/colors";
 import Label from "./Label";
+import { Fragment } from "react";
+import { getEnumKeyByEnumValue } from "../../../util/helper";
 
 function stringer(setter: (val: string) => void) {
 	return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,3 +74,48 @@ export const InputNumber = ({ value, onChange, placeholder }: NumberProps) => {
 		</>
 	);
 };
+
+type Props = {
+	label: string;
+	groupId: string;
+	currentValue: Colors;
+	onChange: (value: Colors) => void;
+	list: { label: string; value: Colors }[];
+};
+
+function radioerer(setter: (val: Colors) => void) {
+	return (e: React.ChangeEvent<HTMLInputElement>) => {
+		const val = e.target.value;
+		const value = getEnumKeyByEnumValue(Colors, val) as Colors | undefined;
+		if (value) {
+			setter(value);
+		}
+	};
+}
+
+export function InputRadio({
+	currentValue,
+	groupId,
+	label,
+	onChange,
+	list,
+}: Props): React.JSX.Element {
+	return (
+		<>
+			<p>{label}</p>
+			{list.map((radio) => (
+				<Fragment key={radio.label}>
+					<input
+						type="radio"
+						id={radio.label}
+						name={groupId}
+						checked={radio.value === currentValue}
+						onChange={radioerer(onChange)}
+					/>
+					<Label htmlFor={radio.label} postfix="" />
+					<br />
+				</Fragment>
+			))}
+		</>
+	);
+}

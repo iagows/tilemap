@@ -11,7 +11,7 @@ type Props<T> = {
 		tile: Tile<T>,
 		position: Diamond,
 	) => void;
-	onClick?: (tile: Tile<T>, row: number, column: number) => void;
+	onClick?: (row: number, column: number, tile: Tile<T>) => void;
 };
 
 const getDiamond = (
@@ -86,7 +86,7 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 					const [currentTile] = row;
 					const diamond = getDiamond(r, c, halfHeight, halfWidth, width);
 					if (isPointInDiamond(point, diamond)) {
-						onClick?.(currentTile, r, c);
+						onClick?.(r, c, currentTile);
 						return;
 					}
 				}
