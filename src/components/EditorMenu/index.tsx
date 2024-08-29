@@ -8,6 +8,12 @@ import useMapInfo from "../../stores/slices/mapInfo/useMapInfo";
 import transformMatrix from "../../util/matrix";
 import useTileConfig from "../../stores/slices/tileConfig/useTileConfig";
 import { Colors } from "../../util/colors";
+import useToolbar from "../../stores/slices/toolbar/useToolbar";
+
+const entries = Object.entries(Colors).map((e) => ({
+	label: e[0],
+	value: e[1],
+}));
 
 function EditorMenu() {
 	const {
@@ -17,6 +23,7 @@ function EditorMenu() {
 		currentMap: { name, background, ground },
 	} = useMapInfo();
 	const { changeHeight, height } = useTileConfig();
+	const { color, setColor } = useToolbar();
 
 	function setRows(val: number) {
 		if (val > 0) {
@@ -67,13 +74,10 @@ function EditorMenu() {
 			/>
 			<InputRadio
 				groupId="Cores"
-				currentValue={Colors.Agua}
+				currentValue={color}
 				label="Cores"
-				onChange={(e) => console.log(e)}
-				list={Object.entries(Colors).map((e) => ({
-					label: e[0],
-					value: e[1],
-				}))}
+				onChange={setColor}
+				list={entries}
 			/>
 		</>
 	);

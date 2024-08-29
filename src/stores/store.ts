@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import mapInfo from "./slices/mapInfo";
 import tileConfig from "./slices/tileConfig";
+import toolbar from "./slices/toolbar";
 
 const tagmarReducers = combineReducers({
 	currentMap: mapInfo,
 	tileInfo: tileConfig,
+	toolbar: toolbar,
 });
 
 export const store = configureStore({

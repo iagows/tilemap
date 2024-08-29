@@ -92,9 +92,10 @@ type Props = {
 function radioerer(setter: (val: Colors) => void) {
 	return (e: React.ChangeEvent<HTMLInputElement>) => {
 		const val = e.target.value;
-		const value = getEnumKeyByEnumValue(Colors, val) as Colors | undefined;
+
+		const value = getEnumKeyByEnumValue(Colors, val);
 		if (value) {
-			setter(value);
+			setter(Colors[value]);
 		}
 	};
 }
@@ -109,19 +110,22 @@ export function InputRadio({
 	return (
 		<>
 			<p>{label}</p>
-			{list.map((radio) => (
-				<Fragment key={radio.label}>
-					<input
-						type="radio"
-						id={radio.label}
-						name={groupId}
-						checked={radio.value === currentValue}
-						onChange={radioerer(onChange)}
-					/>
-					<Label htmlFor={radio.label} postfix="" />
-					<br />
-				</Fragment>
-			))}
+			{list.map((radio) => {
+				console.log("radio", radio.value, currentValue);
+				return (
+					<Fragment key={radio.label}>
+						<input
+							type="radio"
+							id={radio.label}
+							name={groupId}
+							checked={radio.value === currentValue}
+							onChange={radioerer(onChange)}
+							value={radio.value}
+						/>
+						<Label htmlFor={radio.label} postfix="" color={radio.value} />
+					</Fragment>
+				);
+			})}
 		</>
 	);
 }
