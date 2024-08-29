@@ -6,7 +6,7 @@ const INITIAL_CONFIG = {
 };
 
 const toolbarSlice = createSlice({
-	name: "TileConfig",
+	name: "Toolbar",
 	initialState: INITIAL_CONFIG,
 	// https://redux-toolkit.js.org/api/createslice/
 	reducers: {
