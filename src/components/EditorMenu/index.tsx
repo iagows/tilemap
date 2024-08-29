@@ -55,6 +55,8 @@ function EditorMenu() {
 			/>
 			<InputNumber
 				value={height}
+				step={2}
+				min={2}
 				onChange={changeHeight}
 				placeholder="Altura do losango"
 			/>

@@ -56,20 +56,26 @@ export const InputColor = ({ value, onChange, placeholder }: StringProps) => {
 type NumberProps = {
 	value: number;
 	placeholder: string;
+	step?: number;
+	min?: number;
 	onChange: (value: number) => void;
 };
-export const InputNumber = ({ value, onChange, placeholder }: NumberProps) => {
+export const InputNumber = ({
+	value,
+	onChange,
+	placeholder,
+	...props
+}: NumberProps) => {
 	return (
 		<>
 			<Label htmlFor={placeholder} />
 			<input
 				id={placeholder}
 				type="number"
-				min={1}
-				step={1}
 				value={value}
 				placeholder={placeholder}
 				onChange={numberer(onChange)}
+				{...props}
 			/>
 		</>
 	);
