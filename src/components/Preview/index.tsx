@@ -60,9 +60,9 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 			if (ctx) {
 				ctx.clearRect(0, 0, 1000, 1000);
 				for (let r = 0; r < ground.length; ++r) {
-					const [row] = ground;
+					const row = ground[r];
 					for (let c = 0; c < row.length; ++c) {
-						const [currentTile] = row;
+						const currentTile = row[c];
 						const diamond = getDiamond(r, c, halfHeight, halfWidth, width);
 						drawTile(ctx, currentTile, diamond);
 					}
