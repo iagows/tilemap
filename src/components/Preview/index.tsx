@@ -109,6 +109,8 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 
 	return (
 		<canvas
+			width={1024}
+			height={768}
 			ref={ref}
 			style={{ background }}
 			onMouseDown={_onDown}

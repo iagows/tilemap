@@ -53,8 +53,20 @@ const mapSlice = createSlice({
 				return groundRow;
 			});
 		},
+		loadMap: (
+			state,
+			action: PayloadAction<{
+				ground: Matrix<Tile<TagmarTileInfo>>;
+				background: string;
+			}>,
+		) => {
+			const { background, ground } = action.payload;
+			state.background = background;
+			state.ground = ground;
+		},
 	},
 });
 
 export default mapSlice.reducer;
-export const { setAllGround, setBackground, setTile } = mapSlice.actions;
+export const { setAllGround, setBackground, setTile, loadMap } =
+	mapSlice.actions;

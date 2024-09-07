@@ -1,3 +1,4 @@
+import useSaveLoad from "../../hooks/useSaveLoad";
 import useMapInfo from "../../stores/slices/mapInfo/useMapInfo";
 import useTileConfig from "../../stores/slices/tileConfig/useTileConfig";
 import useToolbar from "../../stores/slices/toolbar/useToolbar";
@@ -16,8 +17,9 @@ function EditorMenu() {
 		setBackground,
 		currentMap: { background, ground },
 	} = useMapInfo();
-	const { changeHeight, height } = useTileConfig();
+	const { load, save } = useSaveLoad();
 	const { color, setColor } = useToolbar();
+	const { changeHeight, height } = useTileConfig();
 
 	function setRows(val: number) {
 		if (val > 0) {
@@ -43,6 +45,9 @@ function EditorMenu() {
 
 	return (
 		<>
+			<input type="button" value="Salvar" onClick={save} />
+			<input type="button" value="Carregar" onClick={load} />
+			<br />
 			<InputNumber
 				value={ground.length}
 				onChange={setRows}
