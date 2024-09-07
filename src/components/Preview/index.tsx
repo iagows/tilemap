@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useTileConfig from "../../stores/slices/tileConfig/useTileConfig";
 import type { MapInfo, Tile } from "../../types/MapInfo";
 import { isOdd, isPointInDiamond } from "../../util/helper";
@@ -52,6 +52,7 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 	const { ground, background } = mapInfo;
 	const ref = useRef<HTMLCanvasElement>(null);
 	const { halfHeight, halfWidth, width } = useTileConfig();
+	const [isDrawing, setDrawing] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (ref.current) {
@@ -71,8 +72,20 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 		}
 	}, [ground, halfHeight, halfWidth, width, drawTile]);
 
-	function _onClick(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-		if (ref.current) {
+	function _onDown() {
+		if (ref.current && onClick) {
+			setDrawing(true);
+		}
+	}
+
+	function _onUp() {
+		if (ref.current && onClick) {
+			setDrawing(false);
+		}
+	}
+
+	function _onMove(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+		if (ref.current && onClick && isDrawing) {
 			const canvas = ref.current;
 
 			const rect = canvas.getBoundingClientRect();
@@ -86,7 +99,7 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 					const [currentTile] = row;
 					const diamond = getDiamond(r, c, halfHeight, halfWidth, width);
 					if (isPointInDiamond(point, diamond)) {
-						onClick?.(r, c, currentTile);
+						onClick(r, c, currentTile);
 						return;
 					}
 				}
@@ -94,8 +107,18 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 		}
 	}
 
-	// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-	return <canvas ref={ref} style={{ background }} onClick={_onClick} />;
+	return (
+		<canvas
+			ref={ref}
+			style={{ background }}
+			onMouseDown={_onDown}
+			onMouseUp={_onUp}
+			onMouseLeave={_onUp}
+			onMouseOut={_onUp}
+			onBlur={_onUp}
+			onMouseMove={isDrawing ? _onMove : undefined}
+		/>
+	);
 }
 
 export default Preview;
