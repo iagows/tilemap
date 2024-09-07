@@ -1,0 +1,7 @@
+{
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.formatOnPaste": true,
+	"cSpell.language": "en,pt-BR",
+	"cSpell.words": ["tagmar", "Tagmar"]
+}

@@ -28,11 +28,11 @@ export const InputString = ({ value, onChange, placeholder }: StringProps) => {
 		<>
 			<Label htmlFor={placeholder} />
 			<input
-				id={placeholder}
 				type="text"
 				value={value}
-				onChange={stringer(onChange)}
+				id={placeholder}
 				placeholder={placeholder}
+				onChange={stringer(onChange)}
 			/>
 		</>
 	);
@@ -110,22 +110,19 @@ export function InputRadio({
 	return (
 		<>
 			<p>{label}</p>
-			{list.map((radio) => {
-				console.log("radio", radio.value, currentValue);
-				return (
-					<Fragment key={radio.label}>
-						<input
-							type="radio"
-							id={radio.label}
-							name={groupId}
-							checked={radio.value === currentValue}
-							onChange={radioerer(onChange)}
-							value={radio.value}
-						/>
-						<Label htmlFor={radio.label} postfix="" color={radio.value} />
-					</Fragment>
-				);
-			})}
+			{list.map((radio) => (
+				<Fragment key={radio.label}>
+					<input
+						type="radio"
+						id={radio.label}
+						name={groupId}
+						checked={radio.value === currentValue}
+						onChange={radioerer(onChange)}
+						value={radio.value}
+					/>
+					<Label htmlFor={radio.label} postfix="" color={radio.value} />
+				</Fragment>
+			))}
 		</>
 	);
 }

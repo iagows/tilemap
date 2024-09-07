@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import type { MapInfo, Tile } from "../../types/MapInfo";
 import useTileConfig from "../../stores/slices/tileConfig/useTileConfig";
+import type { MapInfo, Tile } from "../../types/MapInfo";
 import { isOdd, isPointInDiamond } from "../../util/helper";
 import type { Diamond, Point } from "../../util/types";
 
@@ -49,7 +49,7 @@ const getDiamond = (
 };
 
 function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
-	const { ground, name, background } = mapInfo;
+	const { ground, background } = mapInfo;
 	const ref = useRef<HTMLCanvasElement>(null);
 	const { halfHeight, halfWidth, width } = useTileConfig();
 
@@ -94,13 +94,8 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 		}
 	}
 
-	return (
-		<>
-			<div>{name}</div>
-			{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-			<canvas ref={ref} style={{ background }} onClick={_onClick} />
-		</>
-	);
+	// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+	return <canvas ref={ref} style={{ background }} onClick={_onClick} />;
 }
 
 export default Preview;

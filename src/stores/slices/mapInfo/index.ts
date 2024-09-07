@@ -1,11 +1,10 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { TagmarMap, TagmarTileInfo } from "../../../tagmar/TagmarTile";
 import type { Tile } from "../../../types/MapInfo";
-import type { Matrix } from "../../../util/types";
 import { Colors } from "../../../util/colors";
+import type { Matrix } from "../../../util/types";
 
 const INITIAL_CONFIG: TagmarMap = {
-	name: "Mapa",
 	ground: [
 		[
 			{
@@ -28,9 +27,6 @@ const mapSlice = createSlice({
 	initialState: INITIAL_CONFIG,
 	// https://redux-toolkit.js.org/api/createslice/
 	reducers: {
-		setName: (state, action: PayloadAction<string>) => {
-			state.name = action.payload;
-		},
 		setAllGround: (
 			state,
 			action: PayloadAction<Matrix<Tile<TagmarTileInfo>>>,
@@ -44,11 +40,21 @@ const mapSlice = createSlice({
 			const {
 				payload: { column, row, tile },
 			} = action;
-			state.ground[row][column] = tile;
+			state.ground = state.ground.map((groundRow, rowIndex) => {
+				if (rowIndex === row) {
+					return groundRow.map((groundTile, columnIndex) => {
+						if (columnIndex === column) {
+							console.log("aqui", tile);
+							return tile;
+						}
+						return groundTile;
+					});
+				}
+				return groundRow;
+			});
 		},
 	},
 });
 
 export default mapSlice.reducer;
-export const { setName, setAllGround, setBackground, setTile } =
-	mapSlice.actions;
+export const { setAllGround, setBackground, setTile } = mapSlice.actions;
