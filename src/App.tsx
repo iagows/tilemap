@@ -26,6 +26,7 @@ function App() {
 	return (
 		<>
 			<EditorMenu />
+
 			<Preview
 				mapInfo={currentMap}
 				drawTile={fDraw()}

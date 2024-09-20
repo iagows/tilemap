@@ -3,6 +3,7 @@ import useTileConfig from "../../stores/slices/tileConfig/useTileConfig";
 import type { MapInfo, Tile } from "../../types/MapInfo";
 import { isOdd, isPointInDiamond } from "../../util/helper";
 import type { Diamond, Point } from "../../util/types";
+import { Colors } from "../../util/colors";
 
 type Props<T> = {
 	mapInfo: MapInfo<T>;
@@ -13,6 +14,21 @@ type Props<T> = {
 	) => void;
 	onClick?: (row: number, column: number, tile: Tile<T>) => void;
 };
+
+const WIDTH = 1024;
+const HEIGHT = 768;
+const VIEWPORT_STYLE = {
+	position: "relative",
+} as const;
+
+const LAYER_STYLE = {
+	position: "absolute",
+} as const;
+
+const WATER_LAYER = {
+	...LAYER_STYLE,
+	background: Colors.Agua,
+} as const;
 
 const getDiamond = (
 	row: number,
@@ -49,7 +65,7 @@ const getDiamond = (
 };
 
 function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
-	const { ground, background } = mapInfo;
+	const { ground } = mapInfo;
 	const ref = useRef<HTMLCanvasElement>(null);
 	const { halfHeight, halfWidth, width } = useTileConfig();
 	const [isDrawing, setDrawing] = useState<boolean>(false);
@@ -85,41 +101,46 @@ function Preview<T>({ mapInfo, drawTile, onClick }: Props<T>) {
 	}
 
 	function _onMove(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-		if (ref.current && onClick && isDrawing) {
-			const canvas = ref.current;
+		if (!ref.current || !onClick || !isDrawing) {
+			return;
+		}
 
-			const rect = canvas.getBoundingClientRect();
-			const x = e.clientX - rect.left;
-			const y = e.clientY - rect.top;
-			const point: Point = { x, y };
+		const canvas = ref.current;
 
-			for (let r = 0; r < ground.length; ++r) {
-				const [row] = ground;
-				for (let c = 0; c < row.length; ++c) {
-					const [currentTile] = row;
-					const diamond = getDiamond(r, c, halfHeight, halfWidth, width);
-					if (isPointInDiamond(point, diamond)) {
-						onClick(r, c, currentTile);
-						return;
-					}
+		const rect = canvas.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+		const point: Point = { x, y };
+
+		for (let r = 0; r < ground.length; ++r) {
+			const [row] = ground;
+			for (let c = 0; c < row.length; ++c) {
+				const [currentTile] = row;
+				const diamond = getDiamond(r, c, halfHeight, halfWidth, width);
+				if (isPointInDiamond(point, diamond)) {
+					onClick(r, c, currentTile);
+					return;
 				}
 			}
 		}
 	}
 
 	return (
-		<canvas
-			width={1024}
-			height={768}
-			ref={ref}
-			style={{ background }}
-			onMouseDown={_onDown}
-			onMouseUp={_onUp}
-			onMouseLeave={_onUp}
-			onMouseOut={_onUp}
-			onBlur={_onUp}
-			onMouseMove={isDrawing ? _onMove : undefined}
-		/>
+		<div style={VIEWPORT_STYLE}>
+			<canvas width={WIDTH} height={HEIGHT} style={WATER_LAYER} />
+			<canvas
+				style={LAYER_STYLE}
+				width={WIDTH}
+				height={HEIGHT}
+				ref={ref}
+				onMouseDown={_onDown}
+				onMouseUp={_onUp}
+				onMouseLeave={_onUp}
+				onMouseOut={_onUp}
+				onBlur={_onUp}
+				onMouseMove={isDrawing ? _onMove : undefined}
+			/>
+		</div>
 	);
 }
 

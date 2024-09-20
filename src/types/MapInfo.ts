@@ -5,6 +5,5 @@ export type Tile<T> = T & {
 };
 
 export type MapInfo<T> = {
-	background: string;
 	ground: Matrix<Tile<T>>;
 };

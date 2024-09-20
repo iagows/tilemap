@@ -44,7 +44,7 @@ function EditorMenu() {
 	}
 
 	return (
-		<>
+		<div>
 			<input type="button" value="Salvar" onClick={save} />
 			<input type="button" value="Carregar" onClick={load} />
 			<br />
@@ -77,7 +77,7 @@ function EditorMenu() {
 				onChange={setColor}
 				list={entries}
 			/>
-		</>
+		</div>
 	);
 }
 
